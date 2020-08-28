@@ -1,5 +1,5 @@
 
-name: gocv-ubuntu:4.4.0-18.04
+name: gradle:6.6.1-jdk8
 
 on:
   push:
@@ -7,12 +7,12 @@ on:
       - master
     paths:
       # - 'opencv-debian.Dockerfile'
-      - 'gocv-ubuntu.Dockerfile'
+      - 'gradle-jdk.Dockerfile'
 
 jobs:
-  gocv-ubuntu:
+  gradle-jdk:
     runs-on: ubuntu-latest
-    name: builx gocv-ubuntu:4.4.0-ffmpeg
+    name: builx gradle:6.6.1-jdk8
     steps:
       # https://github.com/marketplace/actions/customizable-docker-buildx
       - name: Checkout master
@@ -21,9 +21,9 @@ jobs:
         uses: ilteoood/docker_buildx@master
         with:
           publish: true
-          imageName: bryantrh/gocv-ubuntu
-          tag: 4.4.0-ffmpeg
+          imageName: doubledong/gradle
+          tag: 6.6.1-jdk8
           dockerHubUser: ${{ secrets.DOCKER_USERNAME }}
           dockerHubPassword: ${{ secrets.DOCKER_PASSWORD }}
           platform: linux/amd64,linux/arm64
-          dockerFile: gocv-ubuntu.Dockerfile
+          dockerFile: gradle-jdk.Dockerfile
