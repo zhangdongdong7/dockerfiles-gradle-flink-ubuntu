@@ -33,6 +33,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 ENV GRADLE_VERSION 6.6.1
+
 ARG GRADLE_DOWNLOAD_SHA256=7873ed5287f47ca03549ab8dcb6dc877ac7f0e3d7b1eb12685161d10080910ac
 RUN set -o errexit -o nounset \
     && echo "Downloading Gradle" \
