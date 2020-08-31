@@ -21,8 +21,8 @@ jobs:
         uses: ilteoood/docker_buildx@master
         with:
           publish: true
-          imageName: doubledong/gradle
-          tag: 6.6.1-jdk8
+          imageName: doubledong/gradle-6.6.1-jdk8
+          tag: v1
           dockerHubUser: ${{ secrets.DOCKER_USERNAME }}
           dockerHubPassword: ${{ secrets.DOCKER_PASSWORD }}
           platform: linux/amd64,linux/arm64
