@@ -1,5 +1,5 @@
 
-name: gradle:6.6.1-jdk8
+name: gradle-6.6.1-jdk8
 
 on:
   push:
