@@ -9,6 +9,7 @@ on:
       # - 'opencv-debian.Dockerfile'
       - 'gradle-jdk.Dockerfile'
 
+
 jobs:
   gradle-jdk:
     runs-on: ubuntu-latest
