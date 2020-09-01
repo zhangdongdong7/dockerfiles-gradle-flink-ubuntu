@@ -26,4 +26,4 @@ jobs:
           dockerHubUser: ${{ secrets.DOCKER_USERNAME }}
           dockerHubPassword: ${{ secrets.DOCKER_PASSWORD }}
           platform: linux/amd64,linux/arm64
-          dockerFile: gradle-jdk.Dockerfile
+          dockerFile: flink-scala.Dockerfile
