@@ -1,0 +1,29 @@
+name: flink-scala
+
+on:
+  push:
+    branches: 
+      - master
+    paths:
+      # - 'opencv-debian.Dockerfile'
+      - 'flink-scala.Dockerfile'
+
+
+jobs:
+  gradle-jdk:
+    runs-on: ubuntu-latest
+    name: builx flink-scala
+    steps:
+      # https://github.com/marketplace/actions/customizable-docker-buildx
+      - name: Checkout master
+        uses: actions/checkout@master
+      - name: Build and publish image
+        uses: ilteoood/docker_buildx@master
+        with:
+          publish: true
+          imageName: doubledong/flink
+          tag: 1.10-scala_2.12
+          dockerHubUser: ${{ secrets.DOCKER_USERNAME }}
+          dockerHubPassword: ${{ secrets.DOCKER_PASSWORD }}
+          platform: linux/amd64,linux/arm64
+          dockerFile: gradle-jdk.Dockerfile
