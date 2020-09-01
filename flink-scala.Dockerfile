@@ -21,9 +21,8 @@ FROM adoptopenjdk:8-jre-hotspot-bionic
 # Install dependencies
 RUN set -ex; \
   apt-get update; \
-  apt-get -y install libsnappy1v5 gettext-base; \
+  apt-get install --yes --no-install-recommends wget make git git-lfs libsnappy1v5 openssh-client mercurial gettext-base; \
   rm -rf /var/lib/apt/lists/*
-
 # Grab gosu for easy step-down from root
 ENV GOSU_VERSION 1.11
 RUN set -ex; \
