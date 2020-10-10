@@ -6,4 +6,5 @@ RUN  yum -y install wget tar gzip gcc git curl bash make oracle-release-el7  && 
      rm -rf /var/cache/yum && \
      echo /usr/lib/oracle/${release}.${update}/client64/lib > /etc/ld.so.conf.d/oracle-instantclient${release}.${update}.conf && \
      ldconfig
+     
 ENV PATH=$PATH:/usr/lib/oracle/${release}.${update}/client64/bin
