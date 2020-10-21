@@ -1,3 +1,39 @@
+Skip to content
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@zhangdongdong7 
+Learn Git and GitHub without any code!
+Using the Hello World guide, you’ll start a branch, write comments, and open a pull request.
+
+
+docker-library
+/
+golang
+66
+1k
+363
+Code
+Issues
+2
+Pull requests
+1
+Actions
+Security
+Insights
+golang/1.14/alpine3.12/Dockerfile
+@docker-library-bot
+docker-library-bot Update 1.14 to 1.14.10
+Latest commit 661e3bd 7 days ago
+ History
+ 2 contributors
+@docker-library-bot@tianon
+99 lines (92 sloc)  3.02 KB
+  
 #
 # NOTE: THIS DOCKERFILE IS GENERATED VIA "apply-templates.sh"
 #
@@ -39,52 +75,21 @@ RUN set -eux; \
 	; \
 # also explicitly set GO386 and GOARM if appropriate
 # https://github.com/docker-library/golang/issues/184
-	dpkgArch="$(dpkg --print-architecture)"; \
-		case "${dpkgArch##*-}" in \
-		'amd64') \
-			arch='linux-amd64'; \
-			url='https://storage.googleapis.com/golang/go1.14.10.linux-amd64.tar.gz'; \
-			sha256='66eb6858f375731ba07b0b33f5c813b141a81253e7e74071eec3ae85e9b37098'; \
-			;; \
-		'armhf') \
-			arch='linux-armv6l'; \
-			url='https://storage.googleapis.com/golang/go1.14.10.linux-armv6l.tar.gz'; \
-			sha256='b601dbb186d786488470d73d4637c2144896bf6f499a4122bdd30f4e8dd79e70'; \
-			;; \
-		'arm64') \
-			arch='linux-arm64'; \
-			url='https://storage.googleapis.com/golang/go1.14.10.linux-arm64.tar.gz'; \
-			sha256='30700f7a9df3148df81013bd38715acd09ca5203b8e0aafa8b985306d5e9882e'; \
-			;; \
-		'i386') \
-			arch='linux-386'; \
-			url='https://storage.googleapis.com/golang/go1.14.10.linux-386.tar.gz'; \
-			sha256='0e8e955cc80d2d7046312d16d800be82aa8ce9c5165b936348851923a75b4484'; \
-			;; \
-		'ppc64el') \
-			arch='linux-ppc64le'; \
-			url='https://storage.googleapis.com/golang/go1.14.10.linux-ppc64le.tar.gz'; \
-			sha256='ed5f7ab928ad8414598626740feac5918f7a915da943f21b41a81ad5c1dfa940'; \
-			;; \
-		's390x') \
-			arch='linux-s390x'; \
-			url='https://storage.googleapis.com/golang/go1.14.10.linux-s390x.tar.gz'; \
-			sha256='0bd8b4ad9f4c5a766013cff898770cc1af63910ab680799c78b264d934cf8aab'; \
-			;; \
-		*) \
-# https://github.com/golang/go/issues/38536#issuecomment-616897960
-			arch='src'; \
-			url='https://storage.googleapis.com/golang/go1.14.10.src.tar.gz'; \
-			sha256='b37699a7e3eab0f90412b3969a90fd072023ecf61e0b86369da532810a95d665'; \
-			echo >&2; \
-			echo >&2 "warning: current architecture ($dpkgArch) does not have a corresponding Go binary release; will be building from source"; \
-			echo >&2; \
-			;; \
+	apkArch="$(apk --print-arch)"; \
+	case "$apkArch" in \
+		armhf) export GOARM='6' ;; \
+		armv7) export GOARM='7' ;; \
+		armv8) export GO386='387' ;; \
+		x86) export GO386='387' ;; \
 	esac; \
 	\
-	wget -O go.tgz.asc "$url.asc" --progress=dot:giga; \
-	wget -O go.tgz "$url" --progress=dot:giga; \
-	echo "$sha256 *go.tgz" | sha256sum --strict --check -; \
+# https://github.com/golang/go/issues/38536#issuecomment-616897960
+	url='https://storage.googleapis.com/golang/go1.14.10.src.tar.gz'; \
+	sha256='b37699a7e3eab0f90412b3969a90fd072023ecf61e0b86369da532810a95d665'; \
+	\
+	wget -O go.tgz.asc "$url.asc"; \
+	wget -O go.tgz "$url"; \
+	echo "$sha256 *go.tgz" | sha256sum -c -; \
 	\
 # https://github.com/golang/go/issues/14739#issuecomment-324767697
 	export GNUPGHOME="$(mktemp -d)"; \
@@ -129,3 +134,15 @@ ENV GOPATH /go
 ENV PATH $GOPATH/bin:$PATH
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
 WORKDIR $GOPATH
+© 2020 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
