@@ -39,7 +39,8 @@ RUN set -eux; \
 	; \
 # also explicitly set GO386 and GOARM if appropriate
 # https://github.com/docker-library/golang/issues/184
-	case "${dpkgArch##*-}" in \
+	dpkgArch="$(dpkg --print-architecture)"; \
+		case "${dpkgArch##*-}" in \
 		'amd64') \
 			arch='linux-amd64'; \
 			url='https://storage.googleapis.com/golang/go1.14.10.linux-amd64.tar.gz'; \
@@ -72,12 +73,18 @@ RUN set -eux; \
 			;; \
 		*) \
 # https://github.com/golang/go/issues/38536#issuecomment-616897960
-	url='https://storage.googleapis.com/golang/go1.14.10.src.tar.gz'; \
-	sha256='b37699a7e3eab0f90412b3969a90fd072023ecf61e0b86369da532810a95d665'; \
+			arch='src'; \
+			url='https://storage.googleapis.com/golang/go1.14.10.src.tar.gz'; \
+			sha256='b37699a7e3eab0f90412b3969a90fd072023ecf61e0b86369da532810a95d665'; \
+			echo >&2; \
+			echo >&2 "warning: current architecture ($dpkgArch) does not have a corresponding Go binary release; will be building from source"; \
+			echo >&2; \
+			;; \
+	esac; \
 	\
-	wget -O go.tgz.asc "$url.asc"; \
-	wget -O go.tgz "$url"; \
-	echo "$sha256 *go.tgz" | sha256sum -c -; \
+	wget -O go.tgz.asc "$url.asc" --progress=dot:giga; \
+	wget -O go.tgz "$url" --progress=dot:giga; \
+	echo "$sha256 *go.tgz" | sha256sum --strict --check -; \
 	\
 # https://github.com/golang/go/issues/14739#issuecomment-324767697
 	export GNUPGHOME="$(mktemp -d)"; \
