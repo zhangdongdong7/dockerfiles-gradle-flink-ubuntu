@@ -2,7 +2,8 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-
+ARG GO_VER
+ARG ALPINE_VER
 FROM alpine as peer-base
 RUN apk add --no-cache tzdata
 # set up nsswitch.conf for Go's "netgo" implementation
@@ -21,7 +22,8 @@ ADD . $GOPATH/src/github.com/hyperledger/fabric
 WORKDIR $GOPATH/src/github.com/hyperledger/fabric
 
 FROM golang as peer
-RUN make peer GO_TAGS=
+ARG GO_TAGS
+RUN make peer GO_TAGS=${GO_TAGS}
 
 FROM peer-base
 ENV FABRIC_CFG_PATH /etc/hyperledger/fabric
