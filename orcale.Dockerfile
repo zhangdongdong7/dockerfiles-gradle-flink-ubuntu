@@ -21,7 +21,7 @@ ADD . $GOPATH/src/github.com/hyperledger/fabric
 WORKDIR $GOPATH/src/github.com/hyperledger/fabric
 
 FROM golang as peer
-RUN make peer 
+RUN make peer GO_TAGS=
 
 FROM peer-base
 ENV FABRIC_CFG_PATH /etc/hyperledger/fabric
